@@ -2,7 +2,10 @@ from people import Sage, Pilot
 
 class PerspectPlane:
     '''
-    Represents a single Perspective Pilot. 
+    Represents a single Perspective Plane. Manned by a Pilot and a Sage.
+    The Pilot is responsible for finding posts and comments on the web, while
+    the Sage is responsible for deciding on the relevance of the content found
+    by the Pilot, and making comments on the content.
     '''
     
     def __init__(self, name:str, platform:str='youtube', model='llam3'):
@@ -16,7 +19,7 @@ class PerspectPlane:
             # Pilot, fly through web and find posts
             posts = self.pilot.find_posts()
 
-            # Perspect, determine which posts are most suitable
+            # Sage, determine which posts are most suitable
             suitable_posts = self.sage.rank_posts(posts)
 
             # If no suitable content found, go back to searching

@@ -1,20 +1,32 @@
+from platforms import NavigatorFactory
 
 class Sage():
-    """
-    Represents the perspect mode of Perspective Pilot. Responsible for deciding 
-    on the relevance of content found by the Pilot, and making comments on the 
-    content.
     '''
-    """
-
+    Represents the Sage of Perspect Plane.
+    '''
     def __init__(self, model):
         self.model = model
 
+
+    def rank_posts(self, posts):
+        pass
+
+
 class Pilot():
     '''
-    Represents the Piloting 'mode' of Perspective Pilot. When a Perspective
-    Pilot is in Pilot mode, it browses the web, searching for relevant content. 
+    Represents the Pilot of Perspect Plane. 
     '''
 
     def __init__(self, platform):
-        self.platform = platform
+        self.navigator = NavigatorFactory.create_navigator(platform)
+
+    def find_posts(self, topic='left wing destroyed'):
+        self.navigator.search(topic)
+        return self.navigator.get_search_results()
+    
+    def get_comments(self, post):
+        self.navigator.go_to(post)
+        return self.navigator.get_comments()
+    
+    def deliver_response(self, comment, response):
+        self.navigator.make_response(comment, response)

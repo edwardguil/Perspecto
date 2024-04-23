@@ -11,14 +11,17 @@ class YoutubeNavigator(PlatformNavigator):
         self.driver = webdriver.Firefox()
         self.current_page = PageType.HOME
         self.go_home()
-    
-    def go_home(self):
-        self.driver.get('https://www.youtube.com')
-        self.current_page = PageType.HOME
+
 
     def go_to(self, url:str, page:PageType):
         self.driver.get(url)
         self.current_page = page
+
+    def go_home(self):
+        self.go_to('https://www.youtube.com/', page=PageType.HOME)
+
+    def go_to_post(self, post):
+        self.go_to(post.url, page=PageType.POST)
 
     def search(self, query):
         search_bar = self.driver.find_element(By.XPATH, '//*[@id="search"]')
@@ -60,9 +63,19 @@ class YoutubeNavigator(PlatformNavigator):
         self.driver.execute_script("window.scrollTo(0, 1000);")
         time.sleep(random.randint(1, 3))
 
-    def make_comment(self, comment):
+    def make_response(self, comment, response):
+        print(f'Responding to comment: {comment}')
         pass
+
 
     def login(self):
         pass
     
+
+class NavigatorFactory:
+    @staticmethod
+    def create_navigator(platform:str):
+        if platform == 'youtube':
+            return YoutubeNavigator()
+        else:
+            raise NotImplementedError('Platform not supported')
